@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias - Curso para Mulheres</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="progress-bar">
+                <div class="progress-step active">1</div>
+                <div class="progress-step">2</div>
+                <div class="progress-step">3</div>
+                <div class="progress-step">4</div>
+            </div>
+            <h1>🎯 Escolha sua Categoria</h1>
+            <p>Selecione a área que mais combina com você</p>
+        </header>
+
+        <main class="main-content">
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categorias serão carregadas via JavaScript -->
+                <div class="loading-categories">Carregando categorias...</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/tracker.js"></script>
+    <script>
+        async function carregarCategorias() {
+            try {
+                const response = await fetch('/get-categorias');
+                const categorias = await response.json();
+                
+                const grid = document.getElementById('categoriesGrid');
+                grid.innerHTML = '';
+                
+                categorias.forEach((categoria, index) => {
+                    const categoriaElement = document.createElement('div');
+                    categoriaElement.className = 'category-card';
+                    categoriaElement.style.animationDelay = `${index * 0.1}s`;
+                    categoriaElement.innerHTML = `
+                        <div class="category-icon">${getCategoryIcon(categoria)}</div>
+                        <h3>${categoria}</h3>
+                        <p>${getCategoryDescription(categoria)}</p>
+                        <button class="category-btn" onclick="selecionarCategoria('${categoria}')">
+                            Escolher Esta Área
+                        </button>
+                    `;
+                    grid.appendChild(categoriaElement);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar categorias:', error);
+            }
+        }
+
+        function getCategoryIcon(categoria) {
+            const icons = {
+                "Beleza e Estética": "💄",
+                "Moda e Design": "👗",
+                "Saúde e Bem-estar": "💖",
+                "Culinária e Gastronomia": "👩‍🍳",
+                "Empreendedorismo Feminino": "💼",
+                "Tecnologia para Mulheres": "💻",
+                "Desenvolvimento Pessoal": "🌟",
+                "Artes e Artesanato": "🎨"
+            };
+            return icons[categoria] || "🎓";
+        }
+
+        function getCategoryDescription(categoria) {
+            const descriptions = {
+                "Beleza e Estética": "Aprenda técnicas profissionais de beleza e estética",
+                "Moda e Design": "Desenvolva seu estilo e criatividade na moda",
+                "Saúde e Bem-estar": "Cuide da sua saúde física e mental",
+                "Culinária e Gastronomia": "Domine a arte da culinária e gastronomia",
+                "Empreendedorismo Feminino": "Transforme suas ideias em negócios",
+                "Tecnologia para Mulheres": "Entre no mundo da tecnologia e inovação",
+                "Desenvolvimento Pessoal": "Desenvolva suas habilidades e potencial",
+                "Artes e Artesanato": "Express sua criatividade através das artes"
+            };
+            return descriptions[categoria] || "Desenvolva novas habilidades e competências";
+        }
+
+        function selecionarCategoria(categoria) {
+            window.location.href = `/cadastro?categoria=${encodeURIComponent(categoria)}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarCategorias);
+    </script>
+
+    <style>
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .category-card p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .category-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+
+        .loading-categories {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
+</body>
+</html>
