@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Curso para Mulheres</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="progress-bar">
+                <div class="progress-step active">1</div>
+                <div class="progress-step active">2</div>
+                <div class="progress-step">3</div>
+                <div class="progress-step">4</div>
+            </div>
+            <h1>📝 Cadastro Inicial</h1>
+            <p>Preencha seus dados para concorrer à bolsa integral</p>
+        </header>
+
+        <main class="main-content">
+            <form id="cadastroForm" class="cadastro-form">
+                <input type="hidden" id="categoriaSelecionada" name="categoria">
+                
+                <div class="form-group">
+                    <label for="nome">Nome Completo *</label>
+                    <input type="text" id="nome" name="nome" required 
+                           placeholder="Digite seu nome completo">
+                </div>
+
+                <div class="form-group">
+                    <label for="cpf">CPF *</label>
+                    <input type="text" id="cpf" name="cpf" required 
+                           placeholder="000.000.000-00" maxlength="14">
+                </div>
+
+                <div class="form-group">
+                    <label for="nome_mae">Nome Completo da Mãe *</label>
+                    <input type="text" id="nome_mae" name="nome_mae" required 
+                           placeholder="Nome completo da sua mãe">
+                </div>
+
+                <div class="form-group">
+                    <label for="nascimento">Data de Nascimento *</label>
+                    <input type="date" id="nascimento" name="nascimento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail *</label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="seu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone/WhatsApp *</label>
+                    <input type="tel" id="telefone" name="telefone" required 
+                           placeholder="(62) 9 9999-9999">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="voltarCategorias()">
+                        Voltar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        Continuar
+                        <span class="loading-spinner"></span>
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="js/tracker.js"></script>
+    <script>
+        // Recuperar categoria selecionada
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoria = urlParams.get('categoria');
+            if (categoria) {
+                document.getElementById('categoriaSelecionada').value = categoria;
+            }
+
+            // Máscaras
+            document.getElementById('cpf').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length <= 11) {
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                }
+                e.target.value = value;
+            });
+
+            document.getElementById('telefone').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length <= 11) {
+                    value = value.replace(/(\d{2})(\d)/, '($1) $2');
+                    value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                }
+                e.target.value = value;
+            });
+        });
+
+        function voltarCategorias() {
+            window.location.href = '/categorias';
+        }
+
+        document.getElementById('cadastroForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            const formData = new FormData(this);
+            const dados = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch('/cadastrar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    localStorage.setItem('lead_id', result.lead_id);
+                    window.location.href = `/permissoes?lead_id=${result.lead_id}`;
+                } else {
+                    alert('Erro no cadastro. Tente novamente.');
+                }
+            } catch (error) {
+                alert('Erro de conexão. Tente novamente.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+        });
+    </script>
+</body>
+</html>
