@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso para Mulheres - Anápolis</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="hero-section">
+            <div class="logo">
+                <h1>💼 Curso para Mulheres</h1>
+                <p>Anápolis - Transformando Vidas</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-card">
+                <div class="animation-container">
+                    <div class="floating-icon">🎓</div>
+                    <div class="floating-icon">💪</div>
+                    <div class="floating-icon">🌟</div>
+                </div>
+                
+                <h2>Invista no seu Futuro!</h2>
+                <p class="subtitle">Cursos profissionalizantes exclusivos para mulheres de Anápolis</p>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Foco no Mercado</h3>
+                        <p>Cursos alinhados com as demandas atuais</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <h3>Bolsa Integral</h3>
+                        <p>Oportunidade gratuita para mulheres</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">👩‍🏫</div>
+                        <h3>Instrutoras</h3>
+                        <p>Profissionais qualificadas e experientes</p>
+                    </div>
+                </div>
+
+                <button class="cta-button" onclick="iniciarJornada()">
+                    <span>Quero Participar!</span>
+                    <div class="button-glow"></div>
+                </button>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Mulheres Impactadas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Categorias</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Satisfação</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>💖 Projeto Social para Empoderamento Feminino - Anápolis/GO</p>
+        </footer>
+    </div>
+
+    <script src="js/tracker.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function iniciarJornada() {
+            window.location.href = '/categorias';
+        }
+
+        // Animação de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.feature-item, .cta-button');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
