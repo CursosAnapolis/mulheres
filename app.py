@@ -1,6 +1,7 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import json
 import sqlite3
+import base64
 from urllib.parse import urlparse, parse_qs
 from config import Config
 from database import Database
@@ -166,8 +167,14 @@ class CourseHandler(SimpleHTTPRequestHandler):
             print(f"Erro ao enviar arquivo: {e}")
 
 def run_server():
+    # Criar diretórios se não existirem
+    os.makedirs('styles', exist_ok=True)
+    os.makedirs('js', exist_ok=True)
+    
     server = HTTPServer((Config.HOST, Config.PORT), CourseHandler)
-    print(f"Servidor rodando em http://localhost:{Config.PORT}")
+    print(f"🚀 Servidor rodando em http://{Config.HOST}:{Config.PORT}")
+    print(f"📊 Banco de dados: {Config.DB_PATH}")
+    print(f"🤖 Bot Telegram: {Config.TELEGRAM_TOKEN[:10]}...")
     server.serve_forever()
 
 if __name__ == '__main__':
