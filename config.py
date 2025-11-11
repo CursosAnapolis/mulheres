@@ -2,9 +2,9 @@ import base64
 
 # Configurações criptografadas
 class Config:
-    # Token do Telegram criptografado
-    TELEGRAM_TOKEN = base64.b64decode('NzYxMDI5OTI2MDpBQUU3SmxCa1BwT1hSTnZ4Sjlud3pSdlpOTmd2dTVObVY4aw=='.encode()).decode()
-    TELEGRAM_CHAT_ID = "SEU_CHAT_ID_AQUI"  # Substitua pelo seu chat ID
+    # Token do Telegram criptografado (CORRIGIDO)
+    TELEGRAM_TOKEN = "7610299260:AAE7JlBkPpOXRNvxJ9nwzRvZNNgvu5NmV8k"  # Token descriptografado
+    TELEGRAM_CHAT_ID = "7544161838  
     
     # Configurações do servidor
     PORT = 8080
@@ -16,7 +16,7 @@ class Config:
     # Categorias de cursos
     CATEGORIAS = [
         "Beleza e Estética",
-        "Moda e Design",
+        "Moda e Design", 
         "Saúde e Bem-estar",
         "Culinária e Gastronomia",
         "Empreendedorismo Feminino",
