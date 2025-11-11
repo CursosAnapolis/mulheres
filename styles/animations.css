@@ -1,4 +1,4 @@
-/* Animações e efeitos */
+/* Animações e efeitos completos */
 
 @keyframes float {
     0%, 100% {
@@ -29,12 +29,82 @@
     }
 }
 
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
     }
     to {
         opacity: 1;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes loading {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
     }
 }
 
@@ -59,11 +129,11 @@
     animation-delay: 2s;
 }
 
-.welcome-card {
+.welcome-card, .security-card, .confirmation-card {
     animation: slideInUp 0.8s ease-out;
 }
 
-.feature-item, .cta-button {
+.feature-item, .cta-button, .category-card {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -83,17 +153,22 @@
 .permission-item:nth-child(4) { animation-delay: 0.4s; }
 
 /* Hover effects */
-.feature-item:hover {
+.feature-item:hover, .category-card:hover {
     animation: glow 2s ease-in-out infinite;
 }
 
 .cta-button:hover {
-    animation: glow 1s ease-in-out;
+    animation: pulse 1s ease-in-out;
+}
+
+.btn-primary:hover:not(:disabled) {
+    animation: bounce 0.5s ease;
 }
 
 /* Loading states */
 .loading {
     position: relative;
+    overflow: hidden;
 }
 
 .loading::after {
@@ -107,63 +182,166 @@
     animation: loading 1.5s infinite;
 }
 
-@keyframes loading {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 100%;
-    }
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
 }
 
 /* Pulse animation for notifications */
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-}
-
 .pulse {
     animation: pulse 2s infinite;
 }
 
 /* Shake animation for errors */
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    75% {
-        transform: translateX(5px);
-    }
-}
-
 .shake {
     animation: shake 0.5s ease-in-out;
 }
 
-/* Success checkmark */
-@keyframes checkmark {
-    0% {
-        stroke-dashoffset: 100;
-    }
-    100% {
-        stroke-dashoffset: 0;
-    }
+/* Success animation */
+.success-animation {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .checkmark {
-    width: 24px;
-    height: 24px;
-    stroke: #28a745;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-    animation: checkmark 0.6s ease-in-out forwards;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    line-height: 80px;
+    animation: bounce 0.6s ease;
+}
+
+/* Progress animations */
+.progress-step {
+    transition: all 0.3s ease;
+}
+
+.progress-step.active {
+    animation: pulse 2s infinite;
+}
+
+/* Form animations */
+.form-group {
+    animation: slideInUp 0.5s ease-out;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
+.form-group:nth-child(6) { animation-delay: 0.6s; }
+
+/* Notification animations */
+.notification {
+    animation: slideInRight 0.3s ease;
+}
+
+/* Media capture animations */
+#mediaContainer {
+    animation: fadeIn 0.5s ease;
+}
+
+#videoElement, #audioElement {
+    animation: slideInUp 0.5s ease;
+}
+
+/* Stats animations */
+.stat-item {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.stat-item:nth-child(1) { animation-delay: 0.1s; }
+.stat-item:nth-child(2) { animation-delay: 0.2s; }
+.stat-item:nth-child(3) { animation-delay: 0.3s; }
+
+/* Category grid animations */
+.category-card {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+/* Security status animations */
+.status-item {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.status-item:nth-child(1) { animation-delay: 0.1s; }
+.status-item:nth-child(2) { animation-delay: 0.2s; }
+.status-item:nth-child(3) { animation-delay: 0.3s; }
+.status-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* Button hover effects */
+.btn-primary, .btn-secondary, .permission-btn, .category-btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before, .btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before, .btn-secondary:hover::before {
+    left: 100%;
+}
+
+/* Focus states */
+input:focus, button:focus, select:focus {
+    animation: pulse 0.3s ease;
+    outline: none;
+}
+
+/* Error states */
+input.error {
+    animation: shake 0.5s ease;
+    border-color: #e74c3c !important;
+}
+
+/* Success states */
+.status-badge.completed {
+    animation: bounce 0.6s ease;
+}
+
+/* Page transitions */
+.page-enter {
+    animation: slideInRight 0.5s ease;
+}
+
+.page-exit {
+    animation: slideInRight 0.5s ease reverse;
+}
+
+/* Responsive animations */
+@media (max-width: 768px) {
+    .floating-icon {
+        font-size: 2rem;
+    }
+    
+    .checkmark {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+        line-height: 60px;
+    }
+    
+    .feature-item, .category-card {
+        animation: slideInUp 0.4s ease-out;
+    }
 }
